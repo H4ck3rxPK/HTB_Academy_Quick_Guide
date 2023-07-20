@@ -1,5 +1,3 @@
-<img src="https://hackmd.io/_uploads/H1tDsiQ5h.png" width=555>
-
 ## <span style=color:red>**Passive Information Gathering**</span>
 ### [<span style=color:blue>**WHOIS**<SMALL>(TCP/43)</SMALL></span>](https://datatracker.ietf.org/doc/html/rfc3912)
 #### Linux
