@@ -2,6 +2,7 @@
 ### Using File List to Host Discovery
 ```go
 H4ck3rxPK@htb[/htb]$ cat hosts.lst
+```
 10.129.2.4
 10.129.2.10
 10.129.2.11
@@ -10,6 +11,7 @@ H4ck3rxPK@htb[/htb]$ cat hosts.lst
 10.129.2.20
 10.129.2.28
 
+```go
 H4ck3rxPK@htb[/htb]$ sudo nmap -sn -oA tnet -iL hosts.lst | grep for | cut -d" " -f5
 10.129.2.18
 10.129.2.19
