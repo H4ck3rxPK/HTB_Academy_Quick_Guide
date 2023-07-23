@@ -1,23 +1,8 @@
 ## <span style=color:red>**Host Discovery**</span>
 ### Using File List to Host Discovery
 ```go
-H4ck3rxPK@htb[/htb]$ cat hosts.lst
-```
-10.129.2.4
-10.129.2.10
-10.129.2.11
-10.129.2.18
-10.129.2.19
-10.129.2.20
-10.129.2.28
-
-```go
 H4ck3rxPK@htb[/htb]$ sudo nmap -sn -oA tnet -iL hosts.lst | grep for | cut -d" " -f5
-10.129.2.18
-10.129.2.19
-10.129.2.20
 ```
-
 
 ```go
 | Options  | Description                                                         |
@@ -32,14 +17,6 @@ H4ck3rxPK@htb[/htb]$ sudo nmap -sn -oA tnet -iL hosts.lst | grep for | cut -d" "
 ### Trace the Packets using ICMP
 ```go
 H4ck3rxPK@htb[/htb]$ sudo nmap 10.129.2.18 -sn -oA host -PE --packet-trace --disable-arp-ping 
-
-Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-15 00:12 CEST
-SENT (0.0107s) ICMP [10.10.14.2 > 10.129.2.18 Echo request (type=8/code=0) id=13607 seq=0] IP [ttl=255 id=23541 iplen=28 ]
-RCVD (0.0152s) ICMP [10.129.2.18 > 10.10.14.2 Echo reply (type=0/code=0) id=13607 seq=0] IP [ttl=128 id=40622 iplen=28 ]
-Nmap scan report for 10.129.2.18
-Host is up (0.086s latency).
-MAC Address: DE:AD:00:00:BE:EF
-Nmap done: 1 IP address (1 host up) scanned in 0.11 seconds
 ```
 
 ```go
@@ -92,16 +69,6 @@ H4ck3rxPK@htb[/htb]$ sudo nmap 10.129.2.28 -p- -sV --stats-every=5s
 ### [**Specifying Scripts**](https://nmap.org/nsedoc/scripts/)
 ```go!
 H4ck3rxPK@htb[/htb]$ sudo nmap 10.129.2.28 -p 25 --script banner,smtp-commands
-
-Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-16 23:21 CEST
-Nmap scan report for 10.129.2.28
-Host is up (0.050s latency).
-
-PORT   STATE SERVICE
-25/tcp open  smtp
-|_banner: 220 inlane ESMTP Postfix (Ubuntu)
-|_smtp-commands: inlane, PIPELINING, SIZE 10240000, VRFY, ETRN, STARTTLS, ENHANCEDSTATUSCODES, 8BITMIME, DSN, SMTPUTF8,
-MAC Address: DE:AD:00:00:BE:EF (Intel Corporate)
 ```
 
 ```go
