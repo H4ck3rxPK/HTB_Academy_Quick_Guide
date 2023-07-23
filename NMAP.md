@@ -1,5 +1,3 @@
-![](https://hackmd.io/_uploads/r170Shq5h.png)
-
 ## <span style=color:red>**Host Discovery**</span>
 ### Using File List to Host Discovery
 ```go
