@@ -1,3 +1,5 @@
+![](https://hackmd.io/_uploads/r170Shq5h.png)
+
 ## <span style=color:red>**Host Discovery**</span>
 ### Using File List to Host Discovery
 ```go
@@ -43,7 +45,7 @@ H4ck3rxPK@htb[/htb]$ sudo nmap 10.129.2.18 -sn -oA host -PE --packet-trace --dis
 ### Saving the Results(-oA) and Check
 
 ```go!
-H4ck3rxPK@htb[/htb]$ xsltproc [target.xml] -o target.html
+H4ck3rxPK@htb[/htb]$ xsltproc [nmap.xml] -o target.html
 ```
 ![](https://hackmd.io/_uploads/rJ8M6Ox53.png)
 
