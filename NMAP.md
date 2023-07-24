@@ -1,4 +1,3 @@
-[<img src="https://hackmd.io/_uploads/r170Shq5h.png" width=475>](https://academy.hackthebox.com/achievement/877925/19)
 ## <span style=color:red>**Host Discovery**</span>
 ### Using File List to Host Discovery
 ```go
