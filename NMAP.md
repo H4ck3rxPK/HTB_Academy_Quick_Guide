@@ -1,9 +1,8 @@
-![](https://hackmd.io/_uploads/r170Shq5h.png)
-
+[<img src="https://hackmd.io/_uploads/r170Shq5h.png" width=475>](https://academy.hackthebox.com/achievement/877925/19)
 ## <span style=color:red>**Host Discovery**</span>
 ### Using File List to Host Discovery
 ```go
-H4ck3rxPK@htb[/htb]$ sudo nmap -sn -oA tnet -iL hosts.lst | grep for | cut -d" " -f5
+sudo nmap -sn -oA tnet -iL hosts.lst | grep for | cut -d" " -f5
 ```
 
 ```go
@@ -18,7 +17,7 @@ H4ck3rxPK@htb[/htb]$ sudo nmap -sn -oA tnet -iL hosts.lst | grep for | cut -d" "
 
 ### Trace the Packets using ICMP
 ```go
-H4ck3rxPK@htb[/htb]$ sudo nmap 10.129.2.18 -sn -oA host -PE --packet-trace --disable-arp-ping 
+sudo nmap 10.129.2.18 -sn -oA host -PE --packet-trace --disable-arp-ping 
 ```
 
 ```go
@@ -45,19 +44,18 @@ H4ck3rxPK@htb[/htb]$ sudo nmap 10.129.2.18 -sn -oA host -PE --packet-trace --dis
 ### Saving the Results(-oA) and Check
 
 ```go!
-H4ck3rxPK@htb[/htb]$ xsltproc [nmap.xml] -o target.html
+xsltproc [nmap.xml] -o target.html
 ```
-![](https://hackmd.io/_uploads/rJ8M6Ox53.png)
 
 ### Verbose
 
 
 ```go!
-H4ck3rxPK@htb[/htb]$ sudo nmap 10.129.2.28 -p- -sV -v 
+sudo nmap 10.129.2.28 -p- -sV -v 
 ```
 
 ```go!
-H4ck3rxPK@htb[/htb]$ sudo nmap 10.129.2.28 -p- -sV --stats-every=5s
+sudo nmap 10.129.2.28 -p- -sV --stats-every=5s
 ```
 
 ```go
@@ -84,12 +82,12 @@ H4ck3rxPK@htb[/htb]$ sudo nmap 10.129.2.28 -p 25 --script banner,smtp-commands
 
 ### ACK Scan
 ```go!
-H4ck3rxPK@htb[/htb]$ sudo nmap 10.129.2.28 -p 21,22,25 -sA -Pn -n --disable-arp-ping --packet-trace
+sudo nmap 10.129.2.28 -p 21,22,25 -sA -Pn -n --disable-arp-ping --packet-trace
 ```
 
 ### Decoys
 ```go!
-H4ck3rxPK@htb[/htb]$ sudo nmap 10.129.2.28 -p 80 -sS -Pn -n --disable-arp-ping --packet-trace -D RND:5
+sudo nmap 10.129.2.28 -p 80 -sS -Pn -n --disable-arp-ping --packet-trace -D RND:5
 ```
 
 ```go
@@ -100,7 +98,7 @@ H4ck3rxPK@htb[/htb]$ sudo nmap 10.129.2.28 -p 80 -sS -Pn -n --disable-arp-ping -
 
 ### DNS Proxying
 ```go!                 
-H4ck3rxPK@htb[/htb]$ sudo nmap 10.129.2.28 -p50000 -sS -Pn -n --disable-arp-ping --packet-trace --source-port 53
+sudo nmap 10.129.2.28 -p50000 -sS -Pn -n --disable-arp-ping --packet-trace --source-port 53
 ```
 
 ## <span style=color:purple><big>**CheatSheet**</big></span>
