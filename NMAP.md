@@ -1,7 +1,7 @@
 ## <span style=color:red>**Host Discovery**</span>
 ### Using File List to Host Discovery
 ```go
-sudo nmap -sn -oA tnet -iL hosts.lst | grep for | cut -d" " -f5
+H4ck3rxPK@htb[/htb]$ sudo nmap -sn -oA tnet -iL hosts.lst | grep for | cut -d" " -f5
 ```
 
 ```go
@@ -16,7 +16,7 @@ sudo nmap -sn -oA tnet -iL hosts.lst | grep for | cut -d" " -f5
 
 ### Trace the Packets using ICMP
 ```go
-sudo nmap 10.129.2.18 -sn -oA host -PE --packet-trace --disable-arp-ping 
+H4ck3rxPK@htb[/htb]$ sudo nmap 10.129.2.18 -sn -oA host -PE --packet-trace --disable-arp-ping 
 ```
 
 ```go
@@ -43,18 +43,18 @@ sudo nmap 10.129.2.18 -sn -oA host -PE --packet-trace --disable-arp-ping
 ### Saving the Results(-oA) and Check
 
 ```go!
-xsltproc [nmap.xml] -o target.html
+H4ck3rxPK@htb[/htb]$ xsltproc [nmap.xml] -o target.html
 ```
 
 ### Verbose
 
 
 ```go!
-sudo nmap 10.129.2.28 -p- -sV -v 
+H4ck3rxPK@htb[/htb]$ sudo nmap 10.129.2.28 -p- -sV -v 
 ```
 
 ```go!
-sudo nmap 10.129.2.28 -p- -sV --stats-every=5s
+H4ck3rxPK@htb[/htb]$ sudo nmap 10.129.2.28 -p- -sV --stats-every=5s
 ```
 
 ```go
@@ -81,12 +81,12 @@ H4ck3rxPK@htb[/htb]$ sudo nmap 10.129.2.28 -p 25 --script banner,smtp-commands
 
 ### ACK Scan
 ```go!
-sudo nmap 10.129.2.28 -p 21,22,25 -sA -Pn -n --disable-arp-ping --packet-trace
+H4ck3rxPK@htb[/htb]$ sudo nmap 10.129.2.28 -p 21,22,25 -sA -Pn -n --disable-arp-ping --packet-trace
 ```
 
 ### Decoys
 ```go!
-sudo nmap 10.129.2.28 -p 80 -sS -Pn -n --disable-arp-ping --packet-trace -D RND:5
+H4ck3rxPK@htb[/htb]$ sudo nmap 10.129.2.28 -p 80 -sS -Pn -n --disable-arp-ping --packet-trace -D RND:5
 ```
 
 ```go
@@ -97,7 +97,7 @@ sudo nmap 10.129.2.28 -p 80 -sS -Pn -n --disable-arp-ping --packet-trace -D RND:
 
 ### DNS Proxying
 ```go!                 
-sudo nmap 10.129.2.28 -p50000 -sS -Pn -n --disable-arp-ping --packet-trace --source-port 53
+H4ck3rxPK@htb[/htb]$ sudo nmap 10.129.2.28 -p50000 -sS -Pn -n --disable-arp-ping --packet-trace --source-port 53
 ```
 
 ## <span style=color:purple><big>**CheatSheet**</big></span>
