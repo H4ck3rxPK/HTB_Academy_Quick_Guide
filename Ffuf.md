@@ -1,10 +1,5 @@
 --- 
-- whois ---> query the ownership information of a domain name or IP address. 
 
-- whatweb --->  fingerprinting tool. It can identify the technologies used by websites(server software, web content management systems(CMS), JavaScript libraries, tracking and analytics codes, etc.)
-
-- nslookup, dig --->DNS query tool.
----
 ```go!
         /'___\  /'___\           /'___\       
        /\ \__/ /\ \__/  __  __  /\ \__/       
@@ -101,6 +96,17 @@ H4ck3rxPK@htb[/htb]$ ffuf -w /opt/useful/SecLists/Discovery/DNS/subdomains-top1m
 ```go!
 H4ck3rxPK@htb[/htb]$ ffuf -w /opt/useful/SecLists/Discovery/DNS/subdomains-top1million-5000.txt:FUZZ -u http://FUZZ.IP:PORT
 ```
+
+### vHost Fuzzing
+```go!
+ffuf -w /opt/useful/SecLists/Discovery/DNS/subdomains-top1million-5000.txt:FUZZ -u http://academy.htb:36402/ -H 'Host: FUZZ.academy.htb' -ms 0
+```
+```go
+| Options  | Description                                                         |
+| -------- | ------------------------------------------------------------------- |
+| -ms      | match the response size                                             |
+```
+
 ### Parameter Fuzzing - GET
 ```go！
 H4ck3rxPK@htb[/htb]$ ffuf -w /opt/useful/SecLists/Discovery/Web-Content/burp-parameter-names.txt:FUZZ -u http://admin.academy.htb:PORT/admin/admin.php?FUZZ=key
@@ -110,3 +116,4 @@ H4ck3rxPK@htb[/htb]$ ffuf -w /opt/useful/SecLists/Discovery/Web-Content/burp-par
 ```go!
 H4ck3rxPK@htb[/htb]$ ffuf -w /opt/useful/SecLists/Discovery/Web-Content/burp-parameter-names.txt:FUZZ -u http://admin.academy.htb:PORT/admin/admin.php -X POST -d 'FUZZ=key' -H 'Content-Type: application/x-www-form-urlencoded' -fs xxx
 ```
+
