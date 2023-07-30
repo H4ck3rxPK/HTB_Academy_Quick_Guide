@@ -107,12 +107,13 @@ ffuf -w /opt/useful/SecLists/Discovery/DNS/subdomains-top1million-5000.txt:FUZZ 
 | -ms      | match the response size                                             |
 ```
 
-### Parameter Fuzzing - GET
+## <span style=color:red>Parameter Fuzzing</span>
+### GET
 ```go！
 H4ck3rxPK@htb[/htb]$ ffuf -w /opt/useful/SecLists/Discovery/Web-Content/burp-parameter-names.txt:FUZZ -u http://admin.academy.htb:PORT/admin/admin.php?FUZZ=key
 ```
 
-### Parameter Fuzzing - POST
+### POST
 ```go!
 H4ck3rxPK@htb[/htb]$ ffuf -w /opt/useful/SecLists/Discovery/Web-Content/burp-parameter-names.txt:FUZZ -u http://admin.academy.htb:PORT/admin/admin.php -X POST -d 'FUZZ=key' -H 'Content-Type: application/x-www-form-urlencoded' -fs xxx
 ```
