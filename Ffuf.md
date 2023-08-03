@@ -115,6 +115,18 @@ H4ck3rxPK@htb[/htb]$ ffuf -w /opt/useful/SecLists/Discovery/Web-Content/burp-par
 
 ### POST
 ```go!
-H4ck3rxPK@htb[/htb]$ ffuf -w /opt/useful/SecLists/Discovery/Web-Content/burp-parameter-names.txt:FUZZ -u http://admin.academy.htb:PORT/admin/admin.php -X POST -d 'FUZZ=key' -H 'Content-Type: application/x-www-form-urlencoded' -fs xxx
+H4ck3rxPK@htb[/htb]$ ffuf -w /opt/useful/SecLists/Discovery/Web-Content/burp-parameter-names.txt:FUZZ -u http://admin.academy.htb:PORT/admin/admin.php -X POST -d 'FUZZ=key' -H 'Content-Type: application/x-www-form-urlencoded' -fs 774
+```
+```go
+| Options  | Description                                                         |
+| -------- | ------------------------------------------------------------------- |
+| -fs      | Filter HTTP response size. i.e., -fs 774, then filter all 774 size  |
 ```
 
+### Value
+
+#### Find the Looking for the appropriate wordlist or custom wordlist to crack potential parameter values.
+
+---
+
+Recon is a again and again to 
