@@ -1,7 +1,7 @@
 ## <span style=color:red>**Host Discovery**</span>
 ### Using File List to Host Discovery
 ```go
-H4ck3rxPK@htb[/htb]$ sudo nmap -sn -oA tnet -iL hosts.lst | grep for | cut -d" " -f5
+sudo nmap -sn -oA tnet -iL hosts.lst | grep for | cut -d" " -f5
 ```
 
 ```go
@@ -16,7 +16,7 @@ H4ck3rxPK@htb[/htb]$ sudo nmap -sn -oA tnet -iL hosts.lst | grep for | cut -d" "
 
 ### Trace the Packets using ICMP
 ```go
-H4ck3rxPK@htb[/htb]$ sudo nmap 10.129.2.18 -sn -oA host -PE --packet-trace --disable-arp-ping 
+sudo nmap 10.129.2.18 -sn -oA host -PE --packet-trace --disable-arp-ping 
 ```
 
 ```go
@@ -43,18 +43,18 @@ H4ck3rxPK@htb[/htb]$ sudo nmap 10.129.2.18 -sn -oA host -PE --packet-trace --dis
 ### Saving the Results(-oA) and Check
 
 ```go!
-H4ck3rxPK@htb[/htb]$ xsltproc [nmap.xml] -o target.html
+xsltproc [nmap.xml] -o target.html
 ```
 
 ### Verbose
 
 
 ```go!
-H4ck3rxPK@htb[/htb]$ sudo nmap 10.129.2.28 -p- -sV -v 
+sudo nmap 10.129.2.28 -p- -sV -v 
 ```
 
 ```go!
-H4ck3rxPK@htb[/htb]$ sudo nmap 10.129.2.28 -p- -sV --stats-every=5s
+sudo nmap 10.129.2.28 -p- -sV --stats-every=5s
 ```
 
 ```go
@@ -67,7 +67,7 @@ H4ck3rxPK@htb[/htb]$ sudo nmap 10.129.2.28 -p- -sV --stats-every=5s
 
 ### [**Specifying Scripts**](https://nmap.org/nsedoc/scripts/)
 ```go!
-H4ck3rxPK@htb[/htb]$ sudo nmap 10.129.2.28 -p 25 --script banner,smtp-commands
+sudo nmap 10.129.2.28 -p 25 --script banner,smtp-commands
 ```
 
 ```go
@@ -81,12 +81,12 @@ H4ck3rxPK@htb[/htb]$ sudo nmap 10.129.2.28 -p 25 --script banner,smtp-commands
 
 ### ACK Scan
 ```go!
-H4ck3rxPK@htb[/htb]$ sudo nmap 10.129.2.28 -p 21,22,25 -sA -Pn -n --disable-arp-ping --packet-trace
+sudo nmap 10.129.2.28 -p 21,22,25 -sA -Pn -n --disable-arp-ping --packet-trace
 ```
 
 ### Decoys
 ```go!
-H4ck3rxPK@htb[/htb]$ sudo nmap 10.129.2.28 -p 80 -sS -Pn -n --disable-arp-ping --packet-trace -D RND:5
+sudo nmap 10.129.2.28 -p 80 -sS -Pn -n --disable-arp-ping --packet-trace -D RND:5
 ```
 
 ```go
@@ -97,58 +97,5 @@ H4ck3rxPK@htb[/htb]$ sudo nmap 10.129.2.28 -p 80 -sS -Pn -n --disable-arp-ping -
 
 ### DNS Proxying
 ```go!                 
-H4ck3rxPK@htb[/htb]$ sudo nmap 10.129.2.28 -p50000 -sS -Pn -n --disable-arp-ping --packet-trace --source-port 53
+sudo nmap 10.129.2.28 -p50000 -sS -Pn -n --disable-arp-ping --packet-trace --source-port 53
 ```
-
-## <span style=color:purple><big>**CheatSheet**</big></span>
-### Scanning Options
-
-| **Nmap Option** | **Description** |
-|---|----|
-| `10.10.10.0/24` | Target network range. |
-| `-sn` | Disables port scanning. |
-| `-Pn` | Disables ICMP Echo Requests |
-| `-n` | Disables DNS Resolution. |
-| `-PE` | Performs the ping scan by using ICMP Echo Requests against the target. |
-| `--packet-trace` | Shows all packets sent and received. |
-| `--reason` | Displays the reason for a specific result. |
-| `--disable-arp-ping` | Disables ARP Ping Requests. |
-| `--top-ports=<num>` | Scans the specified top ports that have been defined as most frequent.  |
-| `-p-` | Scan all ports. |
-| `-p22-110` | Scan all ports between 22 and 110. |
-| `-p22,25` | Scans only the specified ports 22 and 25. |
-| `-F` | Scans top 100 ports. |
-| `-sS` | Performs an TCP SYN-Scan. |
-| `-sA` | Performs an TCP ACK-Scan. |
-| `-sU` | Performs an UDP Scan. |
-| `-sV` | Scans the discovered services for their versions. |
-| `-sC` | Perform a Script Scan with scripts that are categorized as "default". |
-| `--script <script>` | Performs a Script Scan by using the specified scripts. |
-| `-O` | Performs an OS Detection Scan to determine the OS of the target. |
-| `-A` | Performs OS Detection, Service Detection, and traceroute scans. |
-| `-D RND:5` | Sets the number of random Decoys that will be used to scan the target. |
-| `-e` | Specifies the network interface that is used for the scan. |
-| `-S 10.10.10.200` | Specifies the source IP address for the scan. |
-| `-g` | Specifies the source port for the scan. |
-| `--dns-server <ns>` | DNS resolution is performed by using a specified name server. |
-
-### Output Options
-
-| **Nmap Option** | **Description** |
-|---|----|
-| `-oA filename` | Stores the results in all available formats starting with the name of "filename". |
-| `-oN filename` | Stores the results in normal format with the name "filename". |
-| `-oG filename` | Stores the results in "grepable" format with the name of "filename". |
-| `-oX filename` | Stores the results in XML format with the name of "filename". |
-
-### Performance Options
-
-| **Nmap Option** | **Description** |
-|---|----|
-| `--max-retries <num>` | Sets the number of retries for scans of specific ports. |
-| `--stats-every=5s` | Displays scan's status every 5 seconds. |
-| `-v/-vv` | Displays verbose output during the scan. |
-| `--initial-rtt-timeout 50ms` | Sets the specified time value as initial RTT timeout. |
-| `--max-rtt-timeout 100ms` | Sets the specified time value as maximum RTT timeout. |
-| `--min-rate 300` | Sets the number of packets that will be sent simultaneously. |
-| `-T <0-5>` | Specifies the specific timing template. |
