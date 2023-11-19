@@ -1,5 +1,11 @@
---- 
 
+---
+
+These are directions for using ffuf to practice this method. Tools such as gobuster, dirb, and dirsearch work similarly. For example:
+* gobuster dir -u http://example.htb/ -w /usr/share/wordlists/dirb/common.txt
+*  dirb http://example.htb/
+
+---
 ```go!
         /'___\  /'___\           /'___\       
        /\ \__/ /\ \__/  __  __  /\ \__/       
@@ -9,6 +15,8 @@
           \/_/    \/_/   \/___/    \/_/       
 
 "FFuF wordlist" --> https://github.com/danielmiessler/SecLists
+
+H4ck3rxPK123@htb[/htb]$ git clone https://github.com/danielmiessler/SecLists
 
 In PwnBox, entire SecLists repo available under /opt/useful/SecLists.
 
@@ -28,8 +36,8 @@ Utilizing for pages and directory fuzzing is another commonly used wordlist call
 
 ```
 
-## <span style=color:red>Basic Fuzzing</span>
-### Directory Fuzzing
+## <span style=color:red>**Basic Fuzzing**</span>
+### Directory
 ```go!
 H4ck3rxPK@htb[/htb]$ ffuf -w /opt/useful/SecLists/Discovery/Web-Content/directory-list-2.3-small.txtl:FUZZ -u http://SERVER_IP:PORT/FUZZ
 
@@ -45,7 +53,7 @@ Location: http://94.237.62.195:52616/forum/
 Content-Type: text/html; charset=iso-8859-1
 ```
 
-### Extension Fuzzing
+### Extension
 ```go!
 H4ck3rxPK@htb[/htb]$ ffuf -w /opt/useful/SecLists/Discovery/Web-Content/web-extensions.txt:FUZZ -u http://SERVER_IP:PORT/indexFUZZ
 
@@ -54,12 +62,12 @@ H4ck3rxPK@htb[/htb]$ ffuf -w /opt/useful/SecLists/Discovery/Web-Content/web-exte
 ```
 "indexFUZZ" instead of "index.FUZZ" --> also other potentially hidden or backup files that might not follow the typical pattern of having a dot before the extension.  
 
-### Page Fuzzing
+### Page
 ```go!
 H4ck3rxPK@htb[/htb]$ ffuf -w /opt/useful/SecLists/Discovery/Web-Content/directory-list-2.3-small.txt:FUZZ -u http://94.237.56.76:43557/blog/FUZZ.php
 ```
 
-### Recursive Fuzzing
+### Recursive
 ```go!
 H4ck3rxPK@htb[/htb]$ ffuf -w /opt/useful/SecLists/Discovery/Web-Content/directory-list-2.3-small.txt:FUZZ -u http://94.237.56.76:43557/FUZZ -recursion -recursion-depth 1 -e .php -v
 
@@ -85,19 +93,19 @@ flag.php           [Status: 200, Size: 21, Words: 1, Lines: 1, Duration: 2ms]
 ```
 Bingo!
 
-## <span style=color:red>Domain Fuzzing</span>
+## <span style=color:red>**Domain Fuzzing**</span>
 ```go!
-H4ck3rxPK@htb[/htb]$ sudo sh -c 'echo "SERVER_IP  academy.htb" >> /etc/hosts'
+sudo sh -c 'echo "SERVER_IP  DOMAIN_NAME" >> /etc/hosts'
 ```
-### Sub-domain Fuzzing
+### Sub-domain
 ```go!
-H4ck3rxPK@htb[/htb]$ ffuf -w /opt/useful/SecLists/Discovery/DNS/subdomains-top1million-5000.txt:FUZZ -u http://FUZZ.hackthebox.eu
+ffuf -w /opt/useful/SecLists/Discovery/DNS/subdomains-top1million-5000.txt:FUZZ -u http://FUZZ.hackthebox.eu
 ```
 ```go!
-H4ck3rxPK@htb[/htb]$ ffuf -w /opt/useful/SecLists/Discovery/DNS/subdomains-top1million-5000.txt:FUZZ -u http://FUZZ.IP:PORT
+ffuf -w /opt/useful/SecLists/Discovery/DNS/subdomains-top1million-5000.txt:FUZZ -u http://FUZZ.IP:PORT
 ```
 
-### vHost Fuzzing
+### vHost
 ```go!
 ffuf -w /opt/useful/SecLists/Discovery/DNS/subdomains-top1million-5000.txt:FUZZ -u http://academy.htb:36402/ -H 'Host: FUZZ.academy.htb' -ms 0
 ```
@@ -107,13 +115,13 @@ ffuf -w /opt/useful/SecLists/Discovery/DNS/subdomains-top1million-5000.txt:FUZZ 
 | -ms      | match the response size                                             |
 ```
 
-## <span style=color:red>Parameter Fuzzing</span>
-### GET
-```go！
+## <span style=color:red>**Parameter Fuzzing**</span>
+### <span style=color:blue>**GET**</span>
+```go!
 H4ck3rxPK@htb[/htb]$ ffuf -w /opt/useful/SecLists/Discovery/Web-Content/burp-parameter-names.txt:FUZZ -u http://admin.academy.htb:PORT/admin/admin.php?FUZZ=key
 ```
 
-### POST
+### <span style=color:blue>**POST**</span>
 ```go!
 H4ck3rxPK@htb[/htb]$ ffuf -w /opt/useful/SecLists/Discovery/Web-Content/burp-parameter-names.txt:FUZZ -u http://admin.academy.htb:PORT/admin/admin.php -X POST -d 'FUZZ=key' -H 'Content-Type: application/x-www-form-urlencoded' -fs 774
 ```
@@ -127,6 +135,3 @@ H4ck3rxPK@htb[/htb]$ ffuf -w /opt/useful/SecLists/Discovery/Web-Content/burp-par
 
 #### Find the Looking for the appropriate wordlist or custom wordlist to crack potential parameter values.
 
----
-
-Recon is a again and again to 
